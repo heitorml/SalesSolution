@@ -27,6 +27,31 @@ namespace Resale.Api.Controllers
             _activitySource = activitySource;
         }
 
+
+        /// <summary>
+        /// Cadastro de Revenda.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de request:
+        ///
+        ///     POST /{
+        ///             "fantasyName": "Distribuidora da esquina",
+        ///             "phone": "23999994323",
+        ///             "contactName": "Heitor Machado",
+        ///             "email": "machado.loureiro@gmail.com",
+        ///             "cnpj": "17373221000108", 
+        ///             "address": {
+        ///               "street": "Av sete",
+        ///               "zipCode": "29100200",
+        ///               "number": "s/n",
+        ///               "city": "Vila Velha"
+        ///             }
+        ///            }
+        /// </remarks>
+        /// <param name="createRequestDto">Dto de requisição de cadastro de revenda.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Codigo da revenda</returns> 
+        /// <response code="201">Returns OrderResponseDto</response>
         [ProducesResponseType(typeof(OrderResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -67,6 +92,32 @@ namespace Resale.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Atualização de dados da Revenda.
+        /// </summary>
+        /// <remarks>
+        /// Exemplo de request:
+        ///
+        ///     POST /{
+        ///             "id": "67f16a6bce05e946b18f02e2",
+        ///             "fantasyName": "Distribuidora da rua de trás",
+        ///             "phone": "23999994323",
+        ///             "contactName": "Heitor Machado",
+        ///             "email": "machado.loureiro@gmail.com",
+        ///             "cnpj": "17373221000108", 
+        ///             "address": {
+        ///               "street": "Av sete",
+        ///               "zipCode": "29100200",
+        ///               "number": "s/n",
+        ///               "city": "Vila Velha"
+        ///             }
+        ///            }
+        /// </remarks>
+        /// <param name="id">identificador da revenda a ser atualizada.</param>
+        /// <param name="requestDto">Dto de atualização de dados da revenda.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>retorna  ResalesResponseDto</returns> 
+        /// <response code="201">Returns ResalesResponseDto</response>
         [ProducesResponseType(typeof(ResalesResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -108,6 +159,13 @@ namespace Resale.Api.Controllers
         }
 
 
+
+        /// <summary>
+        /// Listagem de revendas cadastradas.
+        /// </summary>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Lista de revendas cadastradas</returns> 
+        /// <response code="201">Returns ResalesResponseDto</response>
         [ProducesResponseType(typeof(List<ResalesResponseDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -130,6 +188,13 @@ namespace Resale.Api.Controllers
         }
 
 
+        /// <summary>
+        /// Busca por revenda atraves do codigo de identificação.
+        /// </summary>
+        /// <param name="id">identificador da revenda a ser atualizada.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>A revenda cadastrada</returns> 
+        /// <response code="201">Returns ResalesResponseDto</response>
         [ProducesResponseType(typeof(ResalesResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

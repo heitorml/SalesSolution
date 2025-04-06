@@ -6,6 +6,6 @@
         Merged,
         ReadyForShipping,
         ShippedToSupplier,
-        InProcessSupplier
+        Cancelled
     }
 }

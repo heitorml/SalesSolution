@@ -29,7 +29,13 @@ namespace Solution.Tests._1_Presentation.Consumers
                     }
             };
 
-            var message = new ReceivedOrder(order); 
+            var message = new ReceivedOrder
+            {
+                Id = order.Id,
+                Resale = order.Resale,
+                Items = order.Items,
+                Price = order.Price
+            }; 
             var contextMock = new Mock<ConsumeContext<ReceivedOrder>>();
             contextMock.SetupGet(x => x.Message).Returns(message);
 

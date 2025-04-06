@@ -26,33 +26,65 @@ namespace Orders.Api.Controllers
         }
 
         /// <summary>
-        /// Creates a Order.
+        /// Criação de um pedido.
         /// </summary>
         /// <remarks>
-        /// Sample request:
+        /// Exemplo de request:
         ///
-        ///     POST /
-        ///     {
-        ///         "resale": "Cartão de Crédito",
-        ///         "items": [{
-        ///             "name":"string",
-        ///             "description":"string",
-        ///             "quantity":0,
-        ///             "price":1500.00       
-        ///         }],
-        ///         "price": true,
-        ///         "Status": "1 = Received, 2 = Sent"         
-        ///     }
+        ///     POST /{
+        ///             "resaleId": "67f19f1c10089332038b11e0",
+        ///             "resale": {
+        ///                  "name": "Wimpsys Distribuidora de Bebidas",
+        ///                  "fantasyName": "Wimpsys Bebidas",
+        ///                  "phone": "27996218842",
+        ///                  "contactName": "Heitor Machado",
+        ///                  "email": "machado.loureiro@gmail.com",
+        ///                  "cnpj": "45855653000190",
+        ///                  "address": 
+        ///                  {
+        ///                    "street": "Av. 7",
+        ///                    "number": "s/n",
+        ///                    "zipCode": "29100200",
+        ///                    "city": "Vila Velha"
+        ///                  }
+        ///             },
+        ///             "items": [
+        ///                  {
+        ///                      "name": "Chandon",
+        ///                    "description": "Chandon",
+        ///                    "quantity": 10,
+        ///                    "price": 129.95
+        ///                  },
+        ///                  {
+        ///                      "name": "Ciroc",
+        ///                    "description": "Vodka",
+        ///                    "quantity": 10,
+        ///                    "price": 98
+        ///                  },
+        ///                  {
+        ///                      "name": "Michelob Ultra",
+        ///                    "description": "Cervja sem glutén",
+        ///                    "quantity": 500,
+        ///                    "price": 5
+        ///                  },
+        ///                  {
+        ///                      "name": "Stela Artois Ultra",
+        ///                    "description": "Cerveja stela artois ultra",
+        ///                    "quantity": 500,
+        ///                    "price": 5.10
+        ///                  }
+        ///             ]
+        ///         }
         /// </remarks>
-        /// <param name="orderDto">The data for creating a Order.</param>
-        /// <param name="cancellationToken">The cancellation token.</param>
-        /// <returns>A newly created Order</returns>
-        /// <response code="201">Returns the newly created Order</response>
+        /// <param name="orderDto">Dto de requisição de pedido.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Codigo do pedido e lista de itens</returns> 
+        /// <response code="201">Returns OrderResponseDto</response>
+        [HttpPost]
         [ProducesResponseType(typeof(OrderResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [HttpPost]
         public async Task<ActionResult<OrderResponseDto>> CreateOrder(
             [FromBody] OrderRequestDto orderDto,
             [FromServices] ICreateOrderResalesUseCase useCase,
@@ -98,6 +130,14 @@ namespace Orders.Api.Controllers
 
 
 
+
+        /// <summary>
+        /// Criação de um pedido a ser enviado para o Fornecedor.
+        /// </summary>
+        /// <param name="resaleId">Identificador da revenda.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Codigo do pedido e lista de itens</returns> 
+        /// <response code="201">Returns OrderResponseDto</response>
         [ProducesResponseType(typeof(OrderResponseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]

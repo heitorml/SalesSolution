@@ -38,7 +38,13 @@ namespace Application.UseCases.Orders.Receive
             
             await _repository.AddAsync(newOrder, cancellationToken);
 
-            await _bus.Publish(new ReceivedOrder(newOrder), cancellationToken);
+            await _bus.Publish(new ReceivedOrder
+            {
+                Id = newOrder.Id,
+                Resale = newOrder.Resale,
+                Items = newOrder.Items,
+                Price = newOrder.Price
+            }, cancellationToken);
 
             return OrderMaper.ToResponseDto(newOrder);
         }

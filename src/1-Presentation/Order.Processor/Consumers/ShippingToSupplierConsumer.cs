@@ -26,20 +26,18 @@ namespace Orders.Worker.Consumers
 
             try
             {
-
                 var result = await _shippingToSupplierUseCase.Execute(context.Message.OrderId);
                 activity?.SetTag("payload.response", JsonSerializer.Serialize(result.Value));
                 activity?.AddEvent(new ActivityEvent("ReslesOrders - Finalized"));
-                _logger.LogInformation("ReslesOrders - Finalized");
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message, ex);
                 activity?.AddEvent(new ActivityEvent("Exception"));
                 activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-                throw ex;
+                _logger.LogInformation("ReslesOrders - Finalized");
+                throw;
             }
         }
-
     }
 }

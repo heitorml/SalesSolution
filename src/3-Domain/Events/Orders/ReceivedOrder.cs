@@ -11,12 +11,12 @@ namespace Domain.Events.Orders
         public List<OrderItems> Items { get; set; }
         public decimal Price { get; set; }
 
-        public ReceivedOrder(Order order)
-        {
-            Id = order.Id;
-            Resale = order.Resale;
-            Items = order.Items;
-            Price = order.Price;
-        }
+        //public ReceivedOrder(Order order)
+        //{
+        //    Id = order.Id;
+        //    Resale = order.Resale;
+        //    Items = order.Items;
+        //    Price = order.Price;
+        //}
     }
 }
