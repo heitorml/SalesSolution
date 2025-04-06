@@ -1,0 +1,202 @@
+{
+	"info": {
+		"_postman_id": "959a215b-d72c-427a-8183-ed1f346f4840",
+		"name": "SalesSolution",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38628147"
+	},
+	"item": [
+		{
+			"name": "2-Orders-Api",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"resale\": {\r\n    \"name\": \"Wimpsys Distribuidora de Bebidas\",\r\n    \"fantasyName\": \"Wimpsys Bebidas\",\r\n    \"phone\": \"27996218842\",\r\n    \"contactName\": \"Heitor Machado\",\r\n    \"email\": \"machado.loureiro@gmail.com\",\r\n    \"cnpj\": \"45855653000190\",\r\n    \"address\": [\r\n      {\r\n        \"name\": \"string\",\r\n        \"zipCode\": \"string\",\r\n        \"city\": \"string\"\r\n      }\r\n    ]\r\n  },\r\n  \"items\": [\r\n    {\r\n      \"name\": \"Jhonny Walker - Red Label\",\r\n      \"description\": \"Jhonny Walker\",\r\n      \"quantity\": 4,\r\n      \"price\": 95.90\r\n    },\r\n    {\r\n      \"name\": \"Jhonny Walker - Double Black Label\",\r\n      \"description\": \"Jhonny Walker\",\r\n      \"quantity\": 4,\r\n      \"price\": 199.95\r\n    },\r\n    {\r\n      \"name\": \"Chandon\",\r\n      \"description\": \"Chandon\",\r\n      \"quantity\": 10,\r\n      \"price\": 129.95\r\n    },\r\n    {\r\n      \"name\": \"Ciroc\",\r\n      \"description\": \"Vodka\",\r\n      \"quantity\": 10,\r\n      \"price\": 98\r\n    },\r\n    {\r\n      \"name\": \"michelob ultra\",\r\n      \"description\": \"Cervja sem glutén\",\r\n      \"quantity\": 500,\r\n      \"price\": 5\r\n    },\r\n    {\r\n      \"name\": \"michelob ultra\",\r\n      \"description\": \"Cervja sem glutén\",\r\n      \"quantity\": 500,\r\n      \"price\": 5\r\n    }\r\n\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5266/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5266",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResaleOrder",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"resale\": {\r\n    \"name\": \"Wimpsys Distribuidora de Bebidas\",\r\n    \"fantasyName\": \"Wimpsys Bebidas\",\r\n    \"phone\": \"27996218842\",\r\n    \"contactName\": \"Heitor Machado\",\r\n    \"email\": \"machado.loureiro@gmail.com\",\r\n    \"cnpj\": \"45855653000190\",\r\n    \"address\": [\r\n      {\r\n        \"name\": \"string\",\r\n        \"zipCode\": \"string\",\r\n        \"city\": \"string\"\r\n      }\r\n    ]\r\n  },\r\n  \"items\": [\r\n    {\r\n      \"name\": \"Jhonny Walker - Red Label\",\r\n      \"description\": \"Jhonny Walker\",\r\n      \"quantity\": 4,\r\n      \"price\": 95.90\r\n    },\r\n    {\r\n      \"name\": \"Jhonny Walker - Double Black Label\",\r\n      \"description\": \"Jhonny Walker\",\r\n      \"quantity\": 4,\r\n      \"price\": 199.95\r\n    },\r\n    {\r\n      \"name\": \"Chandon\",\r\n      \"description\": \"Chandon\",\r\n      \"quantity\": 10,\r\n      \"price\": 129.95\r\n    },\r\n    {\r\n      \"name\": \"Ciroc\",\r\n      \"description\": \"Vodka\",\r\n      \"quantity\": 10,\r\n      \"price\": 98\r\n    },\r\n    {\r\n      \"name\": \"michelob ultra\",\r\n      \"description\": \"Cervja sem glutén\",\r\n      \"quantity\": 500,\r\n      \"price\": 5\r\n    },\r\n    {\r\n      \"name\": \"michelob ultra\",\r\n      \"description\": \"Cervja sem glutén\",\r\n      \"quantity\": 500,\r\n      \"price\": 5\r\n    }\r\n\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5266/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5266",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Api de pedidos"
+		},
+		{
+			"name": "1-Resales-Api",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Distribuidora de bebidas teste\",\n  \"fantasyName\": \"Teste\",\n  \"phone\": \"23999994323\",\n  \"contactName\": \"Heitor Machado\",\n  \"email\": \"machado.loureiro@gmail.com\",\n  \"cnpj\": \"31231565000103\",\n  \"address\": {\n    \"street\": \"Av sete\",\n    \"zipCode\": \"29100200\",\n    \"number\": \"s/n\",\n    \"city\": \"Vila Velha\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5154/resales",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5154",
+							"path": [
+								"resales"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"67f0a9d5545c1ccf3e1272ba\",\n  \"addresses\": [\n    {\n      \"street\": \"Av sete\",\n      \"zipCode\": \"29100200\",\n      \"number\": \"s/n\",\n      \"city\": \"Vila Velha\"\n    }\n  ],\n  \"name\": \"Distribuidora\",\n  \"fantasyName\": \"Teste\",\n  \"phone\": \"23999994323\",\n  \"contactName\": \"Heitor Machado\",\n  \"email\": \"machado.loureiro@gmail.com\",\n  \"cnpj\": \"31231565000103\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5154/resales/67f0a9d5545c1ccf3e1272ba",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5154",
+							"path": [
+								"resales",
+								"67f0a9d5545c1ccf3e1272ba"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5154/resales/67f0a9d5545c1ccf3e1272ba",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5154",
+							"path": [
+								"resales",
+								"67f0a9d5545c1ccf3e1272ba"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5154/resales",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5154",
+							"path": [
+								"resales"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Api de cadastro de Revendas/Parceiros"
+		}
+	]
+}
