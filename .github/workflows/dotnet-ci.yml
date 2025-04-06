@@ -5,9 +5,11 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
+  workflow_dispatch:
 
 jobs:
   build-and-test:
+    name: 🔧 Build, Test & Coverage
     runs-on: ubuntu-latest
 
     env:
@@ -15,10 +17,10 @@ jobs:
       CONFIGURATION: 'Release'
 
     steps:
-      - name: ⬇️ Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🧰 Setup .NET SDK
+      - name: 🧰 Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
@@ -38,51 +40,51 @@ jobs:
           name: test-results
           path: '**/TestResults/*.trx'
 
-      - name: 📈 Upload coverage report (Cobertura)
+      - name: 📈 Upload code coverage (Cobertura)
         uses: actions/upload-artifact@v3
         with:
-          name: code-coverage-report
+          name: code-coverage
           path: '**/TestResults/**/coverage.cobertura.xml'
 
   publish:
-    name: 📦 Publish Projects
+    name: 🚀 Publish Artifacts
     needs: build-and-test
     runs-on: ubuntu-latest
 
     steps:
-      - name: ⬇️ Checkout code
+      - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: 🧰 Setup .NET SDK
+      - name: 🧰 Setup .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
-      - name: 🛠️ Restore dependencies
+      - name: 📦 Restore dependencies
         run: dotnet restore
 
-      - name: 🚀 Publish Orders API
+      - name: 📤 Publish Orders API
         run: dotnet publish src/1-Presentation/Orders.Api/Orders.Api.csproj --configuration Release --output ./publish/Orders.Api
 
-      - name: 🚀 Publish Resales API
+      - name: 📤 Publish Resales API
         run: dotnet publish src/1-Presentation/Resales.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
 
-      - name: 🚀 Publish Orders Worker
+      - name: 📤 Publish Orders Worker
         run: dotnet publish src/1-Presentation/Order.Processor/Orders.Worker.csproj --configuration Release --output ./publish/Orders.Worker
 
-      - name: 📤 Upload Orders API Artifact
+      - name: 📦 Upload Orders API Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Orders.Api
           path: ./publish/Orders.Api
 
-      - name: 📤 Upload Resales API Artifact
+      - name: 📦 Upload Resales API Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Resales.Api
           path: ./publish/Resales.Api
 
-      - name: 📤 Upload Orders Worker Artifact
+      - name: 📦 Upload Orders Worker Artifact
         uses: actions/upload-artifact@v3
         with:
           name: Orders.Worker
