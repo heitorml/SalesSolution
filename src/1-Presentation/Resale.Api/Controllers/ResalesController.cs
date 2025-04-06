@@ -49,6 +49,7 @@ namespace Resale.Api.Controllers
         ///            }
         /// </remarks>
         /// <param name="createRequestDto">Dto de requisição de cadastro de revenda.</param>
+        /// <param name="createUseCase">Caso de uso para criação da revenda</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Codigo da revenda</returns> 
         /// <response code="201">Returns OrderResponseDto</response>
@@ -115,6 +116,7 @@ namespace Resale.Api.Controllers
         /// </remarks>
         /// <param name="id">identificador da revenda a ser atualizada.</param>
         /// <param name="requestDto">Dto de atualização de dados da revenda.</param>
+        /// <param name="updateResaleUseCase">Caso de uso para atualização da revenda</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>retorna  ResalesResponseDto</returns> 
         /// <response code="201">Returns ResalesResponseDto</response>
@@ -164,6 +166,7 @@ namespace Resale.Api.Controllers
         /// Listagem de revendas cadastradas.
         /// </summary>
         /// <param name="cancellationToken">Cancellation token.</param>
+        /// <param name="getAllUseCase">Caso de uso para obtenção das revendas</param>
         /// <returns>Lista de revendas cadastradas</returns> 
         /// <response code="201">Returns ResalesResponseDto</response>
         [ProducesResponseType(typeof(List<ResalesResponseDto>), StatusCodes.Status200OK)]
@@ -192,6 +195,7 @@ namespace Resale.Api.Controllers
         /// Busca por revenda atraves do codigo de identificação.
         /// </summary>
         /// <param name="id">identificador da revenda a ser atualizada.</param>
+        /// <param name="getResaleByIdUseCase">Caso de uso para obtenção de revenda por Id</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A revenda cadastrada</returns> 
         /// <response code="201">Returns ResalesResponseDto</response>

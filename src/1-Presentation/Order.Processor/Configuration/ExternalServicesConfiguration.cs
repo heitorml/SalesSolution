@@ -46,7 +46,7 @@ namespace Orders.Worker.Configuration
                     sleepDurationProvider: retryAttempt =>
                         TimeSpan.FromSeconds(Math.Pow(optionsResilience.RetrySecondInitial, retryAttempt)) +
                         TimeSpan.FromMilliseconds(jitter.Next(0, 100)),
-                    onRetry: async (response, timespan, retryCount, context) =>
+                    onRetry: (response, timespan, retryCount, context) =>
                     {
                         var activity = Activity.Current;
                         activity?.AddEvent(new ActivityEvent($"Retry {retryCount} after {timespan.TotalSeconds}s"));
@@ -64,7 +64,7 @@ namespace Orders.Worker.Configuration
                 .CircuitBreakerAsync(
                     handledEventsAllowedBeforeBreaking: optionsResilience.DisarmCircuitAfterErros,
                     durationOfBreak: TimeSpan.FromSeconds(optionsResilience.DisarmCircuitTimmer),
-                    onBreak: async (outcome, breakDelay) =>
+                    onBreak: (outcome, breakDelay) =>
                     {
                         var reason = outcome.Exception?.Message ?? outcome.Result?.ReasonPhrase ?? "Erro inexpected";
                         Console.WriteLine($"Circuit breaker open {breakDelay.TotalSeconds} seconds. Reason: {reason}");

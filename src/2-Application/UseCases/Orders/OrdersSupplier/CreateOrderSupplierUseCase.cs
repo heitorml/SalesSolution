@@ -33,17 +33,17 @@ namespace Application.UseCases.Orders.OrdersSupplier
             CancellationToken cancellationToken)
         {
 
-            _logger.LogInformation("Busca de pedidos com status de Recebidos");
+            _logger.LogInformation("Search for orders with Received status");
             var ordersByResale = await _repository.FindAsync(
                     x => x.Resale.Id == resalesId && 
                          x.Status == OrderStatus.Received,cancellationToken);
             
             if (!ordersByResale.Any())
-                return Error.Failure(ErrorCatalog.ResaleNotFound.Code,
-                                     ErrorCatalog.ResaleNotFound.Description);
+                return Error.Failure(ErrorCatalog.OrderNotFound.Code,
+                                     ErrorCatalog.OrderNotFound.Description);
 
 
-            _logger.LogInformation("Junção dos pedidos");
+            _logger.LogInformation("Merging orders");
             var items = ordersByResale
                .SelectMany(p => p.Items)
                .GroupBy(i => i.Name)
@@ -55,14 +55,14 @@ namespace Application.UseCases.Orders.OrdersSupplier
                }).ToList();
 
 
-            _logger.LogInformation("Validação de quantidade de minima > 1000");
+            _logger.LogInformation("Minimum quantity validation");
             if (items.Sum(i => i.Quantity) <= 1000)
                 return Error.Failure(ErrorCatalog.MinimumQuantityNotReached.Code,
                                      ErrorCatalog.MinimumQuantityNotReached.Description);
 
 
 
-            _logger.LogInformation("Criação do novo pedido com a junção de todos os pedidos recebidos");
+            _logger.LogInformation("Creation of a new order by combining all received orders");
             var newOrder = new Order()
                 {
                     Items = items,
@@ -74,7 +74,7 @@ namespace Application.UseCases.Orders.OrdersSupplier
             await _repository.AddAsync(newOrder, cancellationToken);
 
 
-            _logger.LogInformation("Atualização dos status dos pedidos mesclados para Merged");
+            _logger.LogInformation("Updating the status of merged orders to Merged");
             foreach (var order in ordersByResale)
             {
                 order.Status = OrderStatus.Merged;
@@ -82,7 +82,7 @@ namespace Application.UseCases.Orders.OrdersSupplier
             }
 
 
-            _logger.LogInformation("Envio de evento ReadyForShippingOrder");
+            _logger.LogInformation("Sending ReadyForShippingOrder event");
             await _bus.Publish(new ReadyForShippingOrder { OrderId = newOrder.Id });
 
             return OrderMaper.ToResponseDto(newOrder);

@@ -77,6 +77,7 @@ namespace Orders.Api.Controllers
         ///         }
         /// </remarks>
         /// <param name="orderDto">Dto de requisição de pedido.</param>
+        /// <param name="useCase">Caso de uso para criação de pedido para a revenda.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Codigo do pedido e lista de itens</returns> 
         /// <response code="201">Returns OrderResponseDto</response>
@@ -135,6 +136,7 @@ namespace Orders.Api.Controllers
         /// Criação de um pedido a ser enviado para o Fornecedor.
         /// </summary>
         /// <param name="resaleId">Identificador da revenda.</param>
+        /// <param name="usecase">Caso de uso para criação de pedido para o fornecedor.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Codigo do pedido e lista de itens</returns> 
         /// <response code="201">Returns OrderResponseDto</response>
@@ -145,7 +147,7 @@ namespace Orders.Api.Controllers
         [HttpPost("{resaleId}")]
         public async Task<ActionResult<OrderResponseDto>> JoinOrders(
             string resaleId,
-            [FromServices] ICreateOrderSupplierUseCase joinOrdersUseCase,
+            [FromServices] ICreateOrderSupplierUseCase usecase,
             CancellationToken cancellationToken)
         {
             using var activity = _activitySource.StartActivity("ReslesOrders");
@@ -154,7 +156,7 @@ namespace Orders.Api.Controllers
 
             try
             {
-                var result = await joinOrdersUseCase.Execute(resaleId, cancellationToken);
+                var result = await usecase.Execute(resaleId, cancellationToken);
                 if (result.IsError)
                 {
                     activity?.AddEvent(new ActivityEvent($"Error: ReslesOrders"));

@@ -78,7 +78,7 @@ namespace Solution.Tests._2_Application.UseCases.Resales
             };
 
             _repositoryMock.Setup(r => r.GetByIdAsync(dto.Id, It.IsAny<CancellationToken>()))
-                           .ReturnsAsync((Resale?)null);
+                           .ReturnsAsync((Resale)null);
 
             // Act
             var result = await _useCase.Execute(id, dto, CancellationToken.None);

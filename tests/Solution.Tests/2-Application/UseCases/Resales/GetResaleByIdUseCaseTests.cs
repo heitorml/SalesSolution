@@ -54,7 +54,7 @@ namespace Solution.Tests._2_Application.UseCases.Resales
             var resaleId = "not-found-id";
 
             _repositoryMock.Setup(r => r.GetByIdAsync(resaleId, It.IsAny<CancellationToken>()))
-                           .ReturnsAsync((Resale?)null);
+                           .ReturnsAsync((Resale)null);
 
             // Act
             var result = await _useCase.Execute(resaleId, CancellationToken.None);

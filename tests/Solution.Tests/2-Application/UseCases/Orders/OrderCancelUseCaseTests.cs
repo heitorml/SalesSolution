@@ -55,7 +55,7 @@ namespace Solution.Tests._2_Application.UseCases.Orders
                     It.IsAny<EventId>(),
                     It.Is<It.IsAnyType>((o, _) => o.ToString()!.Contains("Order Cancelled")),
                     null,
-                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
                 Times.Once);
         }
     }

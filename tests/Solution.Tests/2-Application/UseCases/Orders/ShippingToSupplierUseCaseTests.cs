@@ -34,7 +34,7 @@ namespace Solution.Tests._2_Application.UseCases.Orders
         {
             // Arrange
             _repositoryMock.Setup(r => r.GetByIdAsync("123", It.IsAny<CancellationToken>()))
-                           .ReturnsAsync((Order?)null);
+                           .ReturnsAsync((Order)null);
 
             // Act
             var result = await _useCase.Execute("123", CancellationToken.None);
