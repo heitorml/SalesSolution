@@ -145,8 +145,11 @@ Certifique-se de que os seguintes softwares estejam instalados em sua máquina:
 
 ## 🚀 Executando Localmente
 
-- 1. Suba os serviços de infraestrutura com Docker `docker-compose up -d`
-- 2. Rode os projetos  `Orders.Api`, `Resales.Api` e `Orders.Worker`
+- Suba os serviços de infraestrutura com Docker `docker-compose up -d` subirá os conteiners
+- RabbitMQ → http://localhost:15672 (usuário: guest, senha: guest)
+- Jaeger → http://localhost:16686
+- MongoDb → acesse atraves do compass (https://www.mongodb.com/products/tools/compass)  ou interface da sua preferencia
+- Rode os projetos  `Orders.Api`, `Resales.Api` e `Orders.Worker`
 
 
 
