@@ -140,6 +140,7 @@ Certifique-se de que os seguintes softwares estejam instalados em sua máquina:
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - [Docker](https://www.docker.com/) 
 - [Visual Studio 2022+](https://visualstudio.microsoft.com/) ou [Visual Studio Code](https://code.visualstudio.com/)
+- [Postman]
 
 ---
 
@@ -149,9 +150,16 @@ Certifique-se de que os seguintes softwares estejam instalados em sua máquina:
 - RabbitMQ → http://localhost:15672 (usuário: guest, senha: guest)
 - Jaeger → http://localhost:16686
 - MongoDb → acesse atraves do compass (https://www.mongodb.com/products/tools/compass)  ou interface da sua preferencia
+- Inclua o collection do postman (https://github.com/heitorml/SalesSolution/blob/main/SalesSolution.postman_collection.json)
 - Rode os projetos  `Orders.Api`, `Resales.Api` e `Orders.Worker`
+  
 
-
+## 🚀 Fluxo e testes
+- Cadastre uma Revenda enviado um POST no endpoint /resales da  `Resales.Api`
+- O endpoint retorna o identificador da Revenda, de posse identificador da revenda utilize para simular a criação de pedidos
+- Crie quantos pedidos quiser atraves do POST no endpoint /orders da api `Orders.Api`
+- Envie o pedido para o Fornecedor(Serviço Externo)  através do POST no endpoint /orders/{resaleId} da api `Orders.Api`
+- Avalie o resultado. Retornará o identificador do pedido e a lista de itens
 
 
 
