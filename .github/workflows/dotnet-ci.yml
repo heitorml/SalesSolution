@@ -67,7 +67,7 @@ jobs:
         run: dotnet publish src/1-Presentation/Orders.Api/Orders.Api.csproj --configuration Release --output ./publish/Orders.Api
 
       - name: 📤 Publish Resales API
-        run: dotnet publish src/1-Presentation/Resales.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
+        run: dotnet publish src/1-Presentation/Resale.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
 
       - name: 📤 Publish Orders Worker
         run: dotnet publish src/1-Presentation/Order.Processor/Orders.Worker.csproj --configuration Release --output ./publish/Orders.Worker
