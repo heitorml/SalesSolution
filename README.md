@@ -1,50 +1,54 @@
-# SalesSolution
+# 🛒 SalesSolution
 
-O projeto tem como objetivo disponibilizar as funcionalidades de receber pedidos de clientes e enviar pedidos para fornecedores
+O projeto tem como objetivo disponibilizar as funcionalidades de receber pedidos e envia-los ao fornecedor.
+As revendas recebem pedidos dos clientes e após a quantidade mínima de itens for satisfeita (quantidade que o fornecedor recebe) 
+os pedidos podem ser concatenados em um unico pedido e já pode ser enviado ao fornecedor.
+
+Microserviços criados:
+
+- `Orders.Api`
+- `Resales.Api`
+- `Orders.Worker`
 
 
-### Sobre os Eventos
+Abaixo segue os detalhes da implementação 
 
-Eventos dos Pedidos
-- ReceivedOrder - Este evento é publicado sempre um cliente envia um pedido para a revenda.
-- ReadyForShippingOrder - O pedido esta pronto para envio quando a revenda cria um pedido para o fonecedor seguindo critérios.  
-- OrderSentToSupplier - Marca que o pedido foi enviado para a revenda.
-- OrderCancelled - Ocorre quando falha sistemica no envio do pedido ao fornecedor.
+---
+### 📦 Entidades
 
-Eventos da Revenda
-- ResaleCreated - Ocorre quando uma nova revenda é cadastrada.
-- ResaleUpdated - Ocorre quando dados da revenda são atualizadas. 
+Foram criadas as entidades: 
+- `Resales`
+- `Orders`
+- `ItemsOrder`
+- `Address`
+
+As entidades são armazenadas de forma não relacional usando um repositório MongoDb
+
+
+---
+### 🔄 Eventos
+
+**Eventos dos Pedidos**
+- `ReceivedOrder` - Este evento é publicado sempre um cliente envia um pedido para a revenda.
+- `ReadyForShippingOrder` - O pedido esta pronto para envio quando a revenda cria um pedido para o fonecedor seguindo critérios.  
+- `OrderSentToSupplier` - Marca que o pedido foi enviado para a revenda.
+- `OrderCancelled` - Ocorre quando falha sistemica no envio do pedido ao fornecedor.
+
+**Eventos da Revenda**
+- `ResaleCreated` - Ocorre quando uma nova revenda é cadastrada.
+- `ResaleUpdated` - Ocorre quando dados da revenda são atualizadas. 
 
 Cada evento possui um consumidor que reage ao fato processando as ações. 
-Os eventos são transmitos através do messageBroker RabbitMq, a implmentação utiliza o MasstransitV8 (https://masstransit.io/quick-starts)
 
-### Sobre as entidades
-
-Foram criadas as entidades: 
-- Resales 
-- Orders
-- ItemsOrder
-- Address
-
-obs: As entidades são armazenadas de forma não relacional usando um repositorio MongoDb
-
-### Sobre a
-
-Foram criadas as entidades: 
-- Resales 
-- Orders
-- ItemsOrder
-- Address
-
-obs: As entidades são armazenadas de forma não relacional usando um repositorio MongoDb
+---
 
 ### Sobre a mensageria 
 
-Utiliza-se os componentes:
+Os eventos são transmitos através do messageBroker RabbitMq, a implementação utiliza o MasstransitV8 (https://masstransit.io/quick-starts).
 - **MassTransitV8**: biblioteca de mensageria para comunicação entre microsserviços
 - **RabbitMQ**: broker de mensagens usado como transporte
 
-
+---
 ### Sobre a aborgem arquitetural
 
 Para esta solução foi escolhida a Clean Architecture que traz os benefícios
@@ -69,7 +73,6 @@ Para esta solução foi escolhida a Clean Architecture que traz os benefícios
 
 ---
 
-
 ## 🛠️ Tecnologias e Padrões Utilizados
 
 ### 🧼 Clean Architecture
@@ -86,20 +89,21 @@ Para esta solução foi escolhida a Clean Architecture que traz os benefícios
 - Framework para construção de APIs RESTful robustas
 - Usado nos projetos `Orders.Api` e `Resales.Api`
 
-### ⚙️ Worker Service
+### 🔁 Worker Service
 - Utilizado para processamentos em background com o `Orders.Worker`
 - Ideal para filas, cron jobs ou mensageria
 
-### 🧼 Resilience - Polly
-- Politicas de retentativas exponencial
-- CircuitBreaker
+### 🧼 Resilience 
 - Polly - Biblioteca de politicas de resiliencia em chamadas Http
+- Politicas de retentativas exponencial
+- Circuit Breaker
+- Timeout
 
 ### 📦 Refit 
 - Para comunicação entre a `Orders.Api` e `Resales.Api`
 - Abstrai toda a implementação do HttpClient 
 
-### 📈 Fail Fast Validation 
+### ✔️ Fail Fast Validation 
 - Utiliza a biblioteca FluentValidation para efetuar validações de requisições
 
 ### 🗂️ Repositorio NoSQL 
@@ -127,37 +131,30 @@ Para esta solução foi escolhida a Clean Architecture que traz os benefícios
 - Geração de resultados de testes e cobertura de código
 
 
-flowchart TD
-    A[Apresentação<br>API / Worker] --> B[Application Layer<br>UseCases]
-    B --> C[Domain Layer<br>Entities, Interfaces]
-
-    subgraph External Services
-        E[HTTP APIs via Refit]
-        F[MongoDB]
-        G[Message Bus (RabbitMQ)]
-    end
-
-    C --> D[Infrastructure<br>Repositories, Adapters]
-    D -->|Chama| E
-    D -->|Consulta| F
-    D -->|Publica / Consome| G
-    B -->|Chama| D
-
+---
 
 ## ✅ Pré-requisitos
 
 Certifique-se de que os seguintes softwares estejam instalados em sua máquina:
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [Docker](https://www.docker.com/) (Infraestrutura local
+- [Docker](https://www.docker.com/) 
 - [Visual Studio 2022+](https://visualstudio.microsoft.com/) ou [Visual Studio Code](https://code.visualstudio.com/)
 
-
+---
 
 ## 🚀 Executando Localmente
 
-1. Tenha o [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) instalado
-2. Restaure os pacotes:
+- 1. Suba os serviços de infraestrutura com Docker `docker-compose up -d`
+- 2. Rode os projetos  `Orders.Api`, `Resales.Api` e `Orders.Worker`
 
-```bash
-dotnet restore
+
+
+
+
+
+
+
+
+
+
