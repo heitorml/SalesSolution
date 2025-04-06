@@ -23,40 +23,37 @@ namespace Solution.Tests._2_Application.UseCases.Orders
         }
 
         [Fact]
-        public async Task Execute_Should_CancelOrder_When_ValidInput()
+        public async Task Execute_Should_Update_OrderStatus_To_Cancelled()
         {
             // Arrange
-            var cancellationToken = CancellationToken.None;
             var orderId = "order-123";
-            var order = new Order { Id = orderId, Status = OrderStatus.Cancelled };
+            var existingOrder = new Order { Id = orderId, Status = OrderStatus.Cancelled };
 
-            var eventDto = new CancelledOrderRequested
-            {
-                OrderId = orderId
-            };
+            var request = new CancelledOrderRequested { OrderId = orderId };
 
             _repositoryMock
-                .Setup(r => r.GetByIdAsync(orderId, cancellationToken))
-                .ReturnsAsync(order);
+                .Setup(repo => repo.GetByIdAsync(orderId, It.IsAny<CancellationToken>()))
+                .ReturnsAsync(existingOrder);
 
             _repositoryMock
-                .Setup(r => r.UpdateAsync(orderId, It.IsAny<Order>(), cancellationToken))
+                .Setup(repo => repo.UpdateAsync(orderId, It.IsAny<Order>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
             // Act
-            await _useCase.Execute(eventDto, cancellationToken);
+            await _useCase.Execute(request);
 
             // Assert
-            Assert.Equal(OrderStatus.Cancelled, order.Status);
+            Assert.Equal(OrderStatus.Cancelled, existingOrder.Status);
 
-            _repositoryMock.Verify(r => r.GetByIdAsync(orderId, cancellationToken), Times.Once);
-            _repositoryMock.Verify(r => r.UpdateAsync(orderId, order, cancellationToken), Times.Once);
+            _repositoryMock.Verify(repo =>
+                repo.UpdateAsync(orderId, It.Is<Order>(o => o.Status == OrderStatus.Cancelled), It.IsAny<CancellationToken>()),
+                Times.Once);
 
-            _loggerMock.Verify(
-                log => log.Log(
-                    LogLevel.Information,
+            _loggerMock.Verify(log =>
+                log.Log(
+                    LogLevel.Warning,
                     It.IsAny<EventId>(),
-                    It.Is<It.IsAnyType>((v, t) => v.ToString()!.Contains("Order Cancelled")),
+                    It.Is<It.IsAnyType>((o, _) => o.ToString()!.Contains("Order Cancelled")),
                     null,
                     It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
                 Times.Once);

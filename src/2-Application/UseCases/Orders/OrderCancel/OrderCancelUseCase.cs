@@ -25,6 +25,11 @@ namespace Application.UseCases.Orders.OrderCancel
             var order = await _repository.GetByIdAsync(orderDto.OrderId, cancellationToken);
             order.Status = OrderStatus.Cancelled;
 
+            //executar regras
+
+            //enviar e-mail de notificação ao cliente 
+
+
             await _repository.UpdateAsync(orderDto.OrderId, order, cancellationToken);
 
             _logger.LogWarning("Order Cancelled");
