@@ -38,7 +38,7 @@ namespace Solution.Tests._2_Application.UseCases.Orders
             var result = await _useCase.Execute("resale-123", CancellationToken.None);
 
             Assert.True(result.IsError);
-            Assert.Equal(ErrorCatalog.ResaleNotFound.Code, result.FirstError.Code);
+            Assert.Equal(ErrorCatalog.OrderNotFound.Code, result.FirstError.Code);
         }
 
         [Fact]
