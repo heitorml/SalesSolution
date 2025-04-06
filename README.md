@@ -7,13 +7,13 @@ Logo, crei duas API's e um Worker
 - Orders.Api : Recebe pedidos dos cliente e os envia para o fornecedor atraves, possui um banco de dados dedicado.
 - Orders.Worker : Processa os pedidos que estão prontos para serem enviados para o fornecedor
 
+Eventos dos Pedidos
+- ReceivedOrder - Este evento é publicado sempre um cliente envia um pedido para a revenda.
+- ReadyForShippingOrder - O pedido esta pronto para envio quando a revenda cria um pedido para o fonecedor seguindo critérios.  
+- OrderSentToSupplier - Marca que o pedido foi enviado para a revenda
 
-flowchart TD
-    A[Controllers / APIs / Worker] --> B[Application Layer (UseCases)]
-    B --> C[Domain Layer (Entities, Interfaces)]
-    C --> D[Infrastructure (DB, Services, Queue, FileSystem)]
-    D -->|Repositories / Services| C
-    B -->|Calls| D
+
+
 
   
 ---
