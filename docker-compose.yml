@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+  
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.54
+    container_name: jaeger
+    ports:
+      - "16686:16686"   # UI
+      - "4317:4317"     # OTLP gRPC
+      - "4318:4318"     # OTLP HTTP
+#   elasticsearch:
+#     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
+#     container_name: elasticsearch
+#     environment:
+#       - discovery.type=single-node
+#       - xpack.security.enabled=true
+#       - xpack.security.enrollment.enabled=true
+#       - ELASTIC_PASSWORD=changeme
+#     volumes:
+#       - esdata:/usr/share/elasticsearch/data
+#     ports:
+#       - "9200:9200"
+#     healthcheck:
+#       test: curl --fail http://localhost:9200 || exit 1
+#       interval: 10s
+#       retries: 5
+#       start_period: 20s
+#       timeout: 5s
+
+#   kibana:
+#     image: docker.elastic.co/kibana/kibana:8.6.2
+#     container_name: kibana
+#     environment:
+#       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+#       - ELASTICSEARCH_USERNAME=elastic
+#       - ELASTICSEARCH_PASSWORD=changeme
+#     depends_on:
+#       elasticsearch:
+#         condition: service_healthy
+#     ports:
+#       - "5601:5601"
+
+#   apm-server:
+#     image: docker.elastic.co/apm/apm-server:8.6.2
+#     container_name: apm-server
+#     environment:
+#       - output.elasticsearch.hosts=["http://elasticsearch:9200"]
+#       - apm-server.auth.anonymous.enabled=true
+#       - apm-server.otlp.enabled=true
+#     depends_on:
+#       elasticsearch:
+#         condition: service_healthy
+#     ports:
+#       - "8200:8200"
+
+#   jaeger:
+#     image: jaegertracing/all-in-one:1.35
+#     container_name: jaeger
+#     environment:
+#       - COLLECTOR_OTLP_ENABLED=true
+#     ports:
+#       - "16686:16686" # UI do Jaeger
+#       - "14250:14250" # gRPC
+#       - "14268:14268" # HTTP
+#       - "4317:4317"   # OTLP gRPC
+#       - "4318:4318"   # OTLP HTTP
+
+#   otel-collector:
+#     image: otel/opentelemetry-collector-contrib:0.64.1
+#     container_name: otel-collector
+#     command: ["--config=/etc/otel-collector-config.yaml"]
+#     volumes:
+#       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+#     ports:
+#       - "4317:4317"   # OTLP gRPC receiver
+#       - "4318:4318"   # OTLP HTTP receiver
+#     depends_on:
+#       - elasticsearch
+#       - apm-server
+#       - jaeger
+
+# volumes:
+#   esdata:
+#     driver: local
+

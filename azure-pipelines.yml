@@ -1,0 +1,115 @@
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  solution: '**/*.sln'
+
+stages:
+  - stage: RestoreBuildTest
+    displayName: 'Restore, Build, and Test'
+    jobs:
+      - job: Build
+        displayName: 'Build and Test Projects'
+        steps:
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              version: '8.0.x'
+              installationPath: $(Agent.ToolsDirectory)/dotnet
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Restore'
+            inputs:
+              command: 'restore'
+              projects: '$(solution)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Build'
+            inputs:
+              command: 'build'
+              projects: '$(solution)'
+              arguments: '--configuration $(buildConfiguration)'
+
+          - task: DotNetCoreCLI@2
+            displayName: 'Run Tests'
+            inputs:
+              command: 'test'
+              projects: '**/*.Tests.csproj'
+              arguments: > 
+                --configuration $(buildConfiguration) 
+                --no-build 
+                --collect:"XPlat Code Coverage"
+              publishTestResults: true
+
+          - task: PublishTestResults@2
+            displayName: '📊 Publicar Resultados dos Testes'
+            inputs:
+              testResultsFormat: 'VSTest'
+              testResultsFiles: '**/*.trx'
+              searchFolder: '$(System.DefaultWorkingDirectory)'
+              failTaskOnFailedTests: true
+              mergeTestResults: true
+              
+          - task: PublishCodeCoverageResults@1
+            displayName: '📈 Publicar cobertura de testes'
+            inputs:
+              codeCoverageTool: 'Cobertura'
+              summaryFileLocation: '$(Agent.TempDirectory)/**/coverage.cobertura.xml'
+              reportDirectory: '$(Agent.TempDirectory)'
+              failIfCoverageEmpty: true
+
+  - stage: PublishArtifacts
+    displayName: 'Publish Artifacts'
+    dependsOn: RestoreBuildTest
+    jobs:
+      - job: Publish
+        displayName: 'Publish Projects'
+        steps:
+          - task: DotNetCoreCLI@2
+            displayName: '📦 Publish Orders Api'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'src/1-Presentation/Orders.Api/Orders.Api.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/Orders.Api'
+
+          - task: DotNetCoreCLI@2
+            displayName: '📦 Publish Resales Api'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'src/1-Presentation/Resale.Api/Resales.Api.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/Resales.Api'
+
+          - task: DotNetCoreCLI@2
+            displayName: '📦 Publish Orders Worker'
+            inputs:
+              command: 'publish'
+              publishWebProjects: false
+              projects: 'src/1-Presentation/Order.Processor/Orders.Worker.csproj'
+              arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/Orders.Worker'
+
+          - task: PublishBuildArtifacts@1
+            displayName: '🚀 Publish Orders Api Artifact'
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/Orders.Api'
+              artifactName: 'Orders.Api'
+
+          - task: PublishBuildArtifacts@1
+            displayName: '🚀 Publish Resales Api Artifact'
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/Resales.Api'
+              artifactName: 'Resales.Api'
+
+          - task: PublishBuildArtifacts@1
+            displayName: '🚀 Publish WorkerService Artifact'
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/Orders.Worker'
+              artifactName: 'Orders.Worker'
