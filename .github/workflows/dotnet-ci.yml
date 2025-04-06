@@ -18,10 +18,10 @@ jobs:
 
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🧰 Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -35,13 +35,13 @@ jobs:
         run: dotnet test --no-build --configuration ${{ env.CONFIGURATION }} --collect:"XPlat Code Coverage"
 
       - name: 📊 Upload test results (.trx)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results
           path: '**/TestResults/*.trx'
 
       - name: 📈 Upload code coverage (Cobertura)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage
           path: '**/TestResults/**/coverage.cobertura.xml'
@@ -53,7 +53,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🧰 Setup .NET
         uses: actions/setup-dotnet@v3
@@ -67,25 +67,25 @@ jobs:
         run: dotnet publish src/1-Presentation/Orders.Api/Orders.Api.csproj --configuration Release --output ./publish/Orders.Api
 
       - name: 📤 Publish Resales API
-        run: dotnet publish src/1-Presentation/Resales.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
+        run: dotnet publish src/1-Presentation/Resale.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
 
       - name: 📤 Publish Orders Worker
         run: dotnet publish src/1-Presentation/Order.Processor/Orders.Worker.csproj --configuration Release --output ./publish/Orders.Worker
 
       - name: 📦 Upload Orders API Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Orders.Api
           path: ./publish/Orders.Api
 
       - name: 📦 Upload Resales API Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Resales.Api
           path: ./publish/Resales.Api
 
       - name: 📦 Upload Orders Worker Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Orders.Worker
           path: ./publish/Orders.Worker
