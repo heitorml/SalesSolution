@@ -11,6 +11,6 @@ namespace Infrastructure.Repoistories
         Task AddAsync(T entity, CancellationToken cancellationToken = default);
         Task UpdateAsync(string id, T entity,CancellationToken cancellationToken = default);
         Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
-        Task<T?> FirstOrDefault(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
+        Task<T> FirstOrDefault(Expression<Func<T, bool>> predicate, CancellationToken cancellationToken = default);
     }
 }
