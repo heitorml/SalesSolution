@@ -1,0 +1,93 @@
+﻿name: .NET CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      DOTNET_VERSION: '8.0.x'
+      CONFIGURATION: 'Release'
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🧰 Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: 📦 Restore dependencies
+        run: dotnet restore
+
+      - name: 🏗️ Build solution
+        run: dotnet build --configuration ${{ env.CONFIGURATION }} --no-restore
+
+      - name: 🧪 Run tests with coverage
+        run: dotnet test --no-build --configuration ${{ env.CONFIGURATION }} --collect:"XPlat Code Coverage"
+
+      - name: 📊 Publish test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: '**/TestResults/*.trx'
+
+      - name: 📈 Publish code coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: '**/TestResults/**/coverage.cobertura.xml'
+
+  publish:
+    name: 📦 Publish Projects
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🧰 Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: 🛠️ Restore
+        run: dotnet restore
+
+      - name: 🚀 Publish Orders API
+        run: dotnet publish src/1-Presentation/Orders.Api/Orders.Api.csproj --configuration Release --output ./publish/Orders.Api
+
+      - name: 🚀 Publish Resales API
+        run: dotnet publish src/1-Presentation/Resales.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
+
+      - name: 🚀 Publish Orders Worker
+        run: dotnet publish src/1-Presentation/Order.Processor/Orders.Worker.csproj --configuration Release --output ./publish/Orders.Worker
+
+      - name: 📤 Upload Orders API Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Orders.Api
+          path: ./publish/Orders.Api
+
+      - name: 📤 Upload Resales API Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Resales.Api
+          path: ./publish/Resales.Api
+
+      - name: 📤 Upload Orders Worker Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Orders.Worker
+          path: ./publish/Orders.Worker
