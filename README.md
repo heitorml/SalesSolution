@@ -154,7 +154,7 @@ Certifique-se de que os seguintes softwares estejam instalados em sua máquina:
 - Rode os projetos  `Orders.Api`, `Resales.Api` e `Orders.Worker`
   
 
-## 🚀 Fluxo e testes
+## 🚀 Fluxo 
 - Cadastre uma Revenda enviado um POST no endpoint /resales da  `Resales.Api`
 - O endpoint retorna o identificador da Revenda, de posse identificador da revenda utilize para simular a criação de pedidos
 - Crie quantos pedidos quiser atraves do POST no endpoint /orders da api `Orders.Api`
