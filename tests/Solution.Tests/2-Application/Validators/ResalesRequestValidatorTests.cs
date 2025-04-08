@@ -1,7 +1,5 @@
-﻿using Application.Validators;
-using Dto.Address;
-using Dto.Resales.Requests;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
+using Resales.Api.Shared.Validator;
 
 namespace Solution.Tests._2_Application.Validators
 {
@@ -99,7 +97,7 @@ namespace Solution.Tests._2_Application.Validators
             result.ShouldNotHaveAnyValidationErrors();
         }
 
-        private ResalesRequestDto GetValidDto() => new ResalesRequestDto
+        private ResalesRequest GetValidDto() => new ResalesRequest
         {
             Cnpj = "12345678000195", // use um CNPJ válido conforme a regra do método de extensão
             Name = "Loja Teste",

@@ -1,15 +1,11 @@
-using Application.UseCases.Resales.Create;
-using Application.UseCases.Resales.GetAll;
-using Application.UseCases.Resales.GetByFilter;
-using Application.UseCases.Resales.GetById;
-using Application.UseCases.Resales.Updade;
-using Infrastructure;
-using Infrastructure.Repoistories.MongoDb;
-using Resale.Api.Configuration;
+using Resales.Api.Features.Create;
+using Resales.Api.Features.GetAll;
+using Resales.Api.Features.GetById;
+using Resales.Api.Features.Updade;
+using Resales.Api.Shared.Configuration;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -30,12 +26,7 @@ builder.Services.AddSwaggerGen(options =>
 
 builder.Services.AddBrokerConfiguration(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
-
-builder.Services.AddScoped<IUpdateResaleUseCase, UpdateResaleUseCase>();
-builder.Services.AddScoped<IResalesCreateUseCase, ResalesCreateUseCase>();
-builder.Services.AddScoped<IGetAllResaleUseCase, GetAllResaleUseCase>();
-builder.Services.AddScoped<IGetResaleByIdUseCase, GetResaleByIdUseCase>();
+builder.Services.AddFeatures();
 
 var app = builder.Build();
 
@@ -45,14 +36,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Orders API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Resales API V1");
     });
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-app.UseAuthorization();
+var group = app.MapGroup("/resales").WithTags("Resales");
+ResalesCreateEndpoint.MapCreateResalesEndpoints(group);
+UpdateResaleEndpoint.MapUpdateResalesEndpoints(group);
+GetResaleByIdEndpoint.MapGetResaleByIdEndpoints(group);
+GetAllResaleEndpoint.MapGetAllResaleEndpoints(group);
 
-app.MapControllers();
-
+//app.UseAuthorization();
 app.Run();

@@ -8,7 +8,7 @@ namespace Orders.Api.Shared.Configuration
         public static void AddFeatures(this IServiceCollection services)
         {
 
-            services.AddScoped<ICreateOrderResalesFeature, CreateOrderResalesFeture>();
+            services.AddScoped<ICreateOrderResalesFeature, CreateOrderResalesFeature>();
             services.AddScoped<ICreateOrderSupplierFeature, CreateOrderSupplierFeature>();
         }
     }

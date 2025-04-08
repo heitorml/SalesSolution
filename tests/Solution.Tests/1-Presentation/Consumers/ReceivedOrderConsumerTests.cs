@@ -5,6 +5,7 @@ using MassTransit;
 using Microsoft.Extensions.Logging;
 using Moq;
 using Orders.Worker.Consumers;
+using Orders.Worker.Events;
 
 namespace Solution.Tests._1_Presentation.Consumers
 {

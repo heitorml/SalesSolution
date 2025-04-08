@@ -1,5 +1,5 @@
-﻿using Domain.Events.Orders;
-using MassTransit;
+﻿using MassTransit;
+using Orders.Worker.Events;
 
 namespace Orders.Worker.Consumers
 {

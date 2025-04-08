@@ -9,8 +9,8 @@ namespace Orders.Api.Features.OrdersSupplier
     {
         public static void MapCreateOrdersSupplierEndpoints(RouteGroupBuilder groupEndpoint)
         {
-         
-            groupEndpoint.MapPost("/{resaleId}", static async Task<Results<Ok<OrderResponse>, BadRequest<object>, StatusCodeHttpResult>> (
+
+            groupEndpoint.MapPost("/{resaleId}", async Task<Results<Ok<OrderResponse>, BadRequest<object>, StatusCodeHttpResult>> (
                 string resaleId,
                 ICreateOrderSupplierFeature useCase,
                 ActivitySource activitySource,

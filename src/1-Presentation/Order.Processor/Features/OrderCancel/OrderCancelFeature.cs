@@ -1,18 +1,18 @@
-﻿using Application.UseCases.Orders.Receive;
-using CrossCutting.Enums;
-using Domain.Entities;
-using Infrastructure.Repoistories;
+﻿using Orders.Worker.Entities;
+using Orders.Worker.Events;
+using Orders.Worker.Shared.Enums;
+using Orders.Worker.Shared.Infrastructure.Repoistories;
 
-namespace Orders.Api.Features.OrderCancel
+namespace Orders.Worker.Features.OrderCancel
 {
     public class OrderCancelFeature : IOrderCancelFeature
     {
         private readonly IRepository<Order> _repository;
-        private readonly ILogger<CreateOrderResalesUseCase> _logger;
+        private readonly ILogger<OrderCancelFeature> _logger;
 
         public OrderCancelFeature(
             IRepository<Order> repository,
-            ILogger<CreateOrderResalesUseCase> logger)
+            ILogger<OrderCancelFeature> logger)
         {
             _repository = repository;
             _logger = logger;

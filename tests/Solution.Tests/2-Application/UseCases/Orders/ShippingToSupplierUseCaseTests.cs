@@ -9,6 +9,7 @@ using Infrastructure.Repoistories;
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using Orders.Worker.Events;
 
 namespace Solution.Tests._2_Application.UseCases.Orders
 {

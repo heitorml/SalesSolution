@@ -66,7 +66,7 @@ namespace Orders.Api.Features.OrdersResale
             /// <param name="cancellationToken">Cancellation token.</param>
             /// <returns>Codigo do pedido e lista de itens</returns> 
             /// <response code="201">Returns OrderResponseDto</response>
-            groupEndpoint.MapPost("/", static async Task<Results<Ok<OrderResponse>, BadRequest<object>, StatusCodeHttpResult>> (
+            groupEndpoint.MapPost("/", async Task<Results<Ok<OrderResponse>, BadRequest<object>, StatusCodeHttpResult>> (
                 CreateOrderResalesResquest orderDto,
                 ICreateOrderResalesFeature useCase,
                 ActivitySource activitySource,

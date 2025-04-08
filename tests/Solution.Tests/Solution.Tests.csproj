@@ -19,7 +19,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\1-Presentation\Order.Processor\Orders.Worker.csproj" />
-    <ProjectReference Include="..\..\src\2-Application\Application.csproj" />
+    <ProjectReference Include="..\..\src\1-Presentation\Orders.Api\Orders.Api.csproj" />
+    <ProjectReference Include="..\..\src\1-Presentation\Resale.Api\Resales.Api.csproj" />
   </ItemGroup>
 
   <ItemGroup>

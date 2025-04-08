@@ -5,6 +5,8 @@ using Dto.Address;
 using Dto.OrderItems.Requests;
 using Dto.Orders.Requests;
 using Dto.Resales.Requests;
+using Orders.Worker.Shared.Mapper;
+using Orders.Worker.Shared.Requests;
 
 namespace Solution.Tests._2_Application.Mappers
 {

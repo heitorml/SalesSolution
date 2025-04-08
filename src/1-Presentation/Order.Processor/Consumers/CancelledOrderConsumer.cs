@@ -1,23 +1,23 @@
-﻿using Application.UseCases.Orders.OrderCancel;
-using Domain.Events.Orders;
-using MassTransit;
+﻿using MassTransit;
+using Orders.Worker.Events;
+using Orders.Worker.Features.OrderCancel;
 
 namespace Orders.Worker.Consumers
 {
     public class CancelledOrderConsumer : IConsumer<CancelledOrderRequested>
     {
         private readonly ILogger<CancelledOrderConsumer> _logger;
-        private readonly IOrderCancelUseCase _useCase;
+        private readonly IOrderCancelFeature _useCase;
 
         public CancelledOrderConsumer(
             ILogger<CancelledOrderConsumer> logger,
-            IOrderCancelUseCase useCase)
+            IOrderCancelFeature useCase)
         {
             _logger = logger;
             _useCase = useCase;
         }
 
-        public async Task Consume(ConsumeContext<CancelledOrderRequested> context) 
+        public async Task Consume(ConsumeContext<CancelledOrderRequested> context)
             => await _useCase.Execute(context.Message, CancellationToken.None);
 
     }

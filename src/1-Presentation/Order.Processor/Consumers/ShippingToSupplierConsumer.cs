@@ -1,6 +1,6 @@
-﻿using Application.UseCases.Orders.ShippingToSupplier;
-using Domain.Events.Orders;
-using MassTransit;
+﻿using MassTransit;
+using Orders.Api.Features.ShippingToSupplier;
+using Orders.Worker.Events;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -9,10 +9,10 @@ namespace Orders.Worker.Consumers
     public class ShippingToSupplierConsumer : IConsumer<ReadyForShippingOrder>
     {
         private readonly ILogger<ShippingToSupplierConsumer> _logger;
-        private readonly IShippingToSupplierUseCase _shippingToSupplierUseCase;
+        private readonly IShippingToSupplierFeature _shippingToSupplierUseCase;
         private static readonly ActivitySource _activitySource = new("ShippingToSupplier");
 
-        public ShippingToSupplierConsumer(IShippingToSupplierUseCase shippingToSupplierUseCase, ILogger<ShippingToSupplierConsumer> logger = null)
+        public ShippingToSupplierConsumer(IShippingToSupplierFeature shippingToSupplierUseCase, ILogger<ShippingToSupplierConsumer> logger = null)
         {
             _shippingToSupplierUseCase = shippingToSupplierUseCase;
             _logger = logger;

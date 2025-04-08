@@ -1,12 +1,7 @@
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 using Orders.Api.Features.OrdersResale;
 using Orders.Api.Features.OrdersSupplier;
 using Orders.Api.Shared.Configuration;
-using Orders.Api.Shared.Responses;
-using System.Diagnostics;
 using System.Reflection;
-using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 

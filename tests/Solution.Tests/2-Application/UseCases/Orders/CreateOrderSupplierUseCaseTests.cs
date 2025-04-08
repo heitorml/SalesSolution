@@ -6,6 +6,7 @@ using Infrastructure.Repoistories;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Orders.Worker.Events;
 using Solution.Tests.Init;
 using System.Linq.Expressions;
 

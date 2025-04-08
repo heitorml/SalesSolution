@@ -2,6 +2,7 @@
 using Dto.Address;
 using Dto.Resales.Requests;
 using FluentValidation.TestHelper;
+using Orders.Worker.Shared.Requests;
 
 namespace Solution.Tests._2_Application.Validators
 {

@@ -8,6 +8,7 @@ using Infrastructure.Repoistories;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Orders.Worker.Shared.Requests;
 
 namespace Solution.Tests._2_Application.UseCases.Resales
 {

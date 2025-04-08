@@ -2,6 +2,7 @@
 using Domain.Entities;
 using Dto.Address;
 using Dto.Resales.Requests;
+using Orders.Worker.Shared.Mapper;
 
 namespace Solution.Tests._2_Application.Mappers
 {

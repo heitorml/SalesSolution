@@ -7,6 +7,8 @@ using Infrastructure.Repoistories;
 using MassTransit;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Orders.Worker.Events;
+using Orders.Worker.Shared.Requests;
 using Solution.Tests.Init;
 
 namespace Solution.Tests._2_Application.UseCases.Orders

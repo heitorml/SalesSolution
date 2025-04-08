@@ -1,14 +1,13 @@
-using Application.UseCases.Orders.OrderCancel;
-using Application.UseCases.Orders.ShippingToSupplier;
-using Infrastructure;
-using Infrastructure.Repoistories.MongoDb;
-using Orders.Worker.Configuration;
+using Orders.Api.Features.ShippingToSupplier;
+using Orders.Worker.Features.OrderCancel;
+using Orders.Worker.Shared.Configuration;
+using Orders.Worker.Shared.Infrastructure.Repoistories.MongoDb;
 
 var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
-builder.Services.AddScoped<IShippingToSupplierUseCase, ShippingToSupplierUseCase>();
-builder.Services.AddScoped<IOrderCancelUseCase, OrderCancelUseCase>();
+builder.Services.AddScoped<IShippingToSupplierFeature, ShippingToSupplierFeature>();
+builder.Services.AddScoped<IOrderCancelFeature, OrderCancelFeature>();
 
 builder.Services.AddBrokerConfiguration(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);

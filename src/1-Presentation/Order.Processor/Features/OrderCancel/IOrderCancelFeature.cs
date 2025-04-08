@@ -1,4 +1,6 @@
-﻿namespace Orders.Api.Features.OrderCancel
+﻿using Orders.Worker.Events;
+
+namespace Orders.Worker.Features.OrderCancel
 {
     public interface IOrderCancelFeature
     {
