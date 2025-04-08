@@ -64,7 +64,7 @@ jobs:
         run: dotnet restore
 
       - name: 📤 Publish Orders API
-        run: dotnet publish src/1-Presentation/Orders.Api/Orders.Api.csproj --configuration Release --output ./publish/Orders.Api
+        run: dotnet publish src/Orders.Api/Orders.Api.csproj --configuration Release --output ./publish/Orders.Api
 
       - name: 📤 Publish Resales API
         run: dotnet publish src/1-Presentation/Resale.Api/Resales.Api.csproj --configuration Release --output ./publish/Resales.Api
