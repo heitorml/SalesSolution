@@ -1,7 +1,7 @@
 ﻿using MassTransit;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Orders.Api.Configuration
+namespace Orders.Api.Shared.Configuration
 {
     [ExcludeFromCodeCoverage]
     public static class BrokerConfiguration

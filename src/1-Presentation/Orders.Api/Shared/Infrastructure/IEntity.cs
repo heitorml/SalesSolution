@@ -1,4 +1,4 @@
-﻿namespace CrossCutting
+﻿namespace Orders.Api.Shared.Infrastructure
 {
     public interface IEntity
     {

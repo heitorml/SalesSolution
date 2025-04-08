@@ -1,13 +1,16 @@
-using Application.UseCases.Orders.OrdersSupplier;
-using Application.UseCases.Orders.Receive;
-using Infrastructure;
-using Infrastructure.Repoistories.MongoDb;
-using Orders.Api.Configuration;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Orders.Api.Features.OrdersResale;
+using Orders.Api.Features.OrdersSupplier;
+using Orders.Api.Shared.Configuration;
+using Orders.Api.Shared.Responses;
+using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -24,14 +27,9 @@ builder.Services.AddSwaggerGen(options =>
 
 });
 
-
-builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDB"));
-
-builder.Services.AddScoped<ICreateOrderResalesUseCase, CreateOrderResalesUseCase>();
-builder.Services.AddScoped<ICreateOrderSupplierUseCase, CreateOrderSupplierUseCase>();
-
 builder.Services.AddBrokerConfiguration(builder.Configuration);
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddFeatures();
 
 
 var app = builder.Build();
@@ -46,10 +44,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-//app.UseHttpsRedirection();
+app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
+var group = app.MapGroup("/orders").WithTags("Orders");
+CreateOrdersResalesEndpoint.MapCreateOrdersResaleEndpoints(group);
+CreateOrderSupplierEndpoint.MapCreateOrdersSupplierEndpoints(group);
 
 app.Run();
